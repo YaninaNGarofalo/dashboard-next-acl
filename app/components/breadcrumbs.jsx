@@ -8,7 +8,7 @@ const paths = usePathname()
 const pathNames = paths.split('/').filter( path => path )
 //Change later to calculate previous path 
 return (
-<nav className="flex pb-4" aria-label="Breadcrumb">
+<nav className="flex pb-4" >
   <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
       <li className="inline-flex items-center">
         <div className='inline-flex items-center'>
@@ -22,7 +22,7 @@ return (
       return <li key={path+i} className="inline-flex items-center">
                 {i===0 && 
                   <div className='inline-flex items-center'>
-                    <svg className="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <svg className="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1"  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                       <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
                     </svg>
                     <Link href={"/"+path} className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"> {path.toUpperCase()}</Link>
@@ -31,7 +31,7 @@ return (
                 { 
                   i>0 && 
                   <div className='inline-flex items-center'>
-                    <svg className="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <svg className="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                       <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
                     </svg>
                   <Link href={paths} className="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"> {path.toUpperCase()}</Link>

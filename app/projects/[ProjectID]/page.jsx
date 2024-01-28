@@ -26,8 +26,8 @@ const rollOnRollOffData = [
     {"Employee_ID":123, "Name":"John", "Last Name": "Doe", "Roll-Off Date":testDate  ,"Roll-Off Ack Date": testDate , "Prod Access":"Yes", "Non-Prod Access":"No", "SoD":"No","Access Revoke Dt":"No" } ]
 const projectData = {
     "Project ID":123,
-    "Project Name":" Nombre de Cliente",
-    "Client Name":" Nombre de Cliente",     
+    "Project Name":"Nombre de Proyecto",
+    "Client Name":"Nombre de Cliente",     
     "Project POC": "John Doe",
     "Project End Date":"20 de enero de 2026, 6:21:28 p.m. UTC-3",
     "Created":"20 de enero de 2024, 6:21:28 p.m. UTC-3",
