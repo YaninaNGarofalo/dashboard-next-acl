@@ -25,6 +25,7 @@ export default function clients(){
         <div className="flex-col items-center justify-center mb-4 rounded bg-gray-50 dark:bg-gray-800 p-4">        
            <h4 className="p-4 text-2xl font-bold dark:text-white" ><span>Clients</span> <i className="bi bi-arrows-fullscreen" ></i></h4>
             <Tabla data={data} actionName='Client Projects' actionPath='clients/'  />
+            <button className="d-btn d-btn-primary-2 mt-4">Add Client</button>
         </div>
      </div>
   </div>

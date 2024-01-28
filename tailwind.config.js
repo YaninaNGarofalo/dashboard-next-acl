@@ -10,7 +10,6 @@ module.exports = {
       sans: ['Quicksand', 'sans-serif'],
     },    
     extend: {
-      darkMode: 'class',
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

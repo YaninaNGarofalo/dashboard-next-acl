@@ -6,15 +6,15 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-  --color-primary:#6E00FF;
-  --color-primary-2:#6B58FF; 
+  --color-primary:#8E3BE6;
+  --color-primary-2:#a96ee9; 
   --color-primary-3:#E2E5FB;  
   --color-secondary:#FF7A49;
   --color-secondary-2:#FF946D; 
   --color-secondary-3:#E2E5FB;  
   --color-gray-1:#F1F2F8;
   --color-gray-2:#938EAA;
-  --color-gray-3:#333333;
+  --color-gray-3:#374151;
   --color-success:#03D798;  
   --color-success-2:#D0F9EB;
   --color-warning:#FFCF36;  
@@ -28,36 +28,27 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-    --color-primary:#6E00FF;
-    --color-primary-2:#6B58FF; 
-    --color-primary-3:#E2E5FB;  
-    --color-secondary:#FF7A49;
-    --color-secondary-2:#FF946D; 
-    --color-secondary-3:#E2E5FB;  
-    --color-gray-1:#F1F2F8;
-    --color-gray-2:#938EAA;
-    --color-gray-3:#333333;
-    --color-success:#03D798;  
-    --color-success-2:#D0F9EB;
-    --color-warning:#FFCF36;  
-    --color-warning-2:#FFF1C5;  
-    --color-danger:#FF345F;  
-    --color-danger-2:#FEEBEF;
-    --heading-font-family: 'Poppins';
-    --text-font-family:'Montserrat';
+    --background-start-rgb:var(--color-gray-1);
+    --background-end-rgb:var(--color-gray-1);
+    --color-primary-3:#8E3BE6;
+    --color-primary:#E2E5FB;  
+    --color-secondary-3:#FF7A49;
+    --color-secondary:#E2E5FB;  
+    --color-gray-3:#F1F2F8;
+    --color-gray-1:#374151;
+    --color-success-2:#03D798;  
+    --color-success:#D0F9EB;
+    --color-warning-2:#FFCF36;  
+    --color-warning:#FFF1C5;  
+    --color-danger-2:#FF345F;  
+    --color-danger:#FEEBEF;
   }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-repeat: repeat-y;
+  background:var(--background-start-rgb);
 }
 
 @layer utilities {
@@ -84,6 +75,32 @@ h1,h2,h3,h4,h5,h6 {
 .d-text-warning-2{color: var(--color-warning-2);}
 .d-text-success{color: var(--color-success);}
 .d-text-success-2{color: var(--color-success-2);}
+
+.d-grid{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.col-1{
+  grid-column: auto  / span 1;
+}
+.col-2{
+  grid-column: auto / span 2;
+}
+.col-3{
+  grid-column: auto / span 3;
+}
+
+/*----------------------form elements------------------------*/
+input{
+  background-color: var(--color-gray-1);
+  border-radius:5px;  
+  color: var(--color-gray-3);
+  height: 40px;
+  border: 1px solid var(--color-primary);
+  width: 100%;
+  padding: 2px;
+}
 .d-btn{
   padding: 10px 15px;
   font-family: var(--text-font-family);
@@ -100,10 +117,15 @@ h1,h2,h3,h4,h5,h6 {
   color:var(--color-primary) ;
   font-weight: 400;
 }
-/*----------------------data lists-----------------------------*/
+.d-btn-sm{
+  font-size:12px;
+  padding: 8px 10px;
+}
+
+/*----------------------data lists summary-----------------------------*/
 dt.summary,dd.summary {
-  height: 58px;
-  line-height: 58px;
+  height: 45px;
+  line-height: 45px;
   border-top: 1px solid var(--color-gray-1);
   padding: 0 20px;
   margin-bottom: 2px;
@@ -113,4 +135,28 @@ dt.summary{
 }
 dl div:last-child dt.summary,dl div:last-child dd.summary {
   border-bottom: 1px solid var(--color-gray-1);
+}
+/*----------------------- tables -----------------------*/
+table {
+  width: 100%;
+  display: table;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+thead {
+  color: var(--color-primary-2);
+  background-color: var(--color-primary-3);
+}
+tr {
+  border-bottom: 1px solid var(--color-primary-3);
+}
+td, th {
+  padding: 15px 5px;
+  display: table-cell;
+  text-align: left;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+td, th {
+  padding: 15px 10px;
 }

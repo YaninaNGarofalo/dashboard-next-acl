@@ -1,6 +1,7 @@
 import { Navbar } from "@/app/components/nav";
 import { Breadcrumbs } from "@/app/components/breadcrumbs";
 import Tabla from "@/app/components/tabla";
+import Summary from "@/app/components/summarydetails";
 export default function client({ params }) {
 const data = [
     {"Project #":123, "Project Name" :"C", "Project POC":"JonDoe@mail.com","Project Status":"Completed","# Active Employees":0 , "# Roll-Off Ack Pending":5 , "# Segregation of Duties":5 , "# Revoke Past Due":5,"actionID":123  },
@@ -8,13 +9,13 @@ const data = [
     {"Project #":789, "Project Name" :"A", "Project POC":"JonDoe@mail.com","Project Status":"Completed","# Active Employees":0 , "# Roll-Off Ack Pending":5 , "# Segregation of Duties":5 , "# Revoke Past Due":5,"actionID":789   }
   ]
 const clientData = {
-  "ClientName":" Nombre de Cliente", 
-  "ClientID":123,
-  "AccountManager": "John Doe",
+  "Client Name":" Nombre de Cliente", 
+  "Client ID":123,
+  "Account Manager": "John Doe",
   "Created":"20 de enero de 2024, 6:21:28 p.m. UTC-3",
-  "CreatedBy": "Admin", 
+  "Created By": "Admin", 
   "Modified":"20 de enero de 2024, 6:21:28 p.m. UTC-3",
-  "ModifiedBy": "John Doe"
+  "Modified By": "John Doe"
 
 }
 return (
@@ -41,76 +42,17 @@ return (
           ></path>
         </svg>
       </button>
-
       <Navbar></Navbar>
-
       <div style={{ height: 100 + "vh" }} className="p-4 sm:ml-64">        
         <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 ">
           <Breadcrumbs></Breadcrumbs>
           <div className="flex-col mb-4">
             <div className="flex-col items-center justify-center mb-4 rounded bg-gray-50 dark:bg-gray-800 p-4">
-              
-              <h4 className="flex justify-between items-center p-4 d-border-bottom-primary-3 text-2xl font-bold dark:text-white">
-               <span className="w-4/5">Client Name </span> <button className="d-btn d-btn-primary">Edit Client</button>
-              </h4>
-              <div className="p-4">
-                <div className=" border-t border-gray-100">
-                  <dl className="divide-y divide-gray-100">
-                    <div className="px-4 sm:px-0 ">
-                      <dt className="summary text-sm font-medium leading-6 text-gray-900 dark:text-white">
-                        Client Name
-                      </dt>
-                      <dd className="summary  mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400">
-                        {clientData.ClientName}
-                      </dd>
-                    </div>
-                    <div className=" px-4 sm:px-0">
-                      <dt className="summary  text-sm font-medium leading-6 text-gray-900 dark:text-white">
-                      Account Manager
-                      </dt>
-                      <dd className="summary  mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400">
-                        {clientData.AccountManager} 
-                      </dd>
-                    </div>
-                    <div className="px-4 sm:px-0">
-                      <dt className="summary text-sm font-medium leading-6 text-gray-900 dark:text-white">
-                        Created
-                      </dt>
-                      <dd className="summary mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400">
-                      {clientData.Created} 
-                      </dd>
-                    </div>
-                    <div className="px-4 sm:px-0">
-                      <dt className="summary text-sm font-medium leading-6 text-gray-900 dark:text-white">
-                      Created By
-                      </dt>
-                      <dd className="summary mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400">
-                      {clientData.CreatedBy} 
-                      </dd>
-                    </div>
-                    <div className="px-4 sm:px-0">
-                      <dt className="summary text-sm font-medium leading-6 text-gray-900 dark:text-white">
-                      Modified
-                      </dt>
-                      <dd className="summary mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400">
-                      {clientData.Modified} 
-                      </dd>
-                    </div>
-                    <div className="px-4 sm:px-0">
-                      <dt className="summary text-sm font-medium leading-6 text-gray-900 dark:text-white">
-                      Modified By
-                      </dt>
-                      <dd className="summary mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 dark:text-gray-400">
-                      {clientData.ModifiedBy} 
-                      </dd>
-                    </div>
-                  </dl>
-                </div>
-              </div>
+              <Summary title={clientData["Client Name"]} summaryObj={clientData} />
             </div>
             <div className="col-span-3  flex-col items-center justify-center mb-4 rounded bg-gray-50 dark:bg-gray-800 p-4">
                 <h4 className="p-4 text-2xl font-bold dark:text-white">
-                    <span>Project Metrics</span>
+                    <span>Client Projects</span>
                     <i className="bi bi-arrows-fullscreen"></i>
                 </h4>
                 <Tabla  data={data} actionName='Project Info' actionPath='../projects/'  />
