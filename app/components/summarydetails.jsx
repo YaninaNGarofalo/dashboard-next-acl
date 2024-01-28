@@ -12,7 +12,7 @@ export default function Summary({title,summaryObj}){
                   <dl >
                     { objProp.map((prop, i)=>{
                         if(edit){
-                            return <div className="px-4 sm:px-0 d-grid">
+                            return <div key={prop+i} className="px-4 sm:px-0 d-grid">
                                         <dt className="summary text-xs font-medium leading-6 col-1">
                                             {prop}
                                         </dt>
@@ -21,7 +21,7 @@ export default function Summary({title,summaryObj}){
                                         </dd>
                                     </div>     
                         }else{
-                            return  <div className="px-4 sm:px-0 d-grid">
+                            return  <div key={prop+i}  className="px-4 sm:px-0 d-grid">
                                         <dt className="summary text-xs font-medium leading-6 col-1">
                                             {prop}
                                         </dt>
