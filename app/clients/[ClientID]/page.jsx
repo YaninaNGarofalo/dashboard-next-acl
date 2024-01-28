@@ -19,9 +19,9 @@ const clientData = {
 
 }
 return (
-    <>
+    <div className="flex">
       <Navbar></Navbar>
-      <div style={{ height: 100 + "vh" }} className="p-4 sm:ml-64">        
+      <div className="p-4 w-full h-screen">        
         <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 ">
           <Breadcrumbs></Breadcrumbs>
           <div className="flex-col mb-4">
@@ -38,6 +38,6 @@ return (
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
