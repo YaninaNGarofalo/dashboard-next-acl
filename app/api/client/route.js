@@ -3,12 +3,13 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     const clients = await getClients();
-    console.log(clients, '----------------------')
     return NextResponse.json(clients);
 }
 export async function POST(request) {
     const body = await request.json();  
-    console.log(body)
+    console.log(body, 'POST body')
+
+    addClient(body)
     // revalidateTag("clients");  
     return NextResponse.json("Added");
 }

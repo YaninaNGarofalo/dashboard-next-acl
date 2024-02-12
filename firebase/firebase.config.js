@@ -25,10 +25,26 @@ const userRef = collection(db, "TR_Users");
 //TR_Users
 export const getUsers = async () => {
   const snapshot = await getDocs(userRef);
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+  const projects = await Promise.all(
+    snapshot.docs.map(async(doc) => {
+     const data = {...doc.data()}
+     const modifiedBy = await getDoc(data['Modified By'])
+     const createdBy = await getDoc(data['Created By'])
+     const modified = data['Modified']  
+     const created = data['Created']
+     const tempObj ={
+       Name : data.Name? data.Name:'',
+       Password:data.Password? data.Password:'',
+       'Modified By' : modifiedBy.data()?.Name? modifiedBy.data().Name:'',
+       'Modified' : modified.toDate().toDateString(),
+       'Created By' : createdBy.data()?.Name?createdBy.data().Name:'',
+       'Created' : created.toDate().toDateString(),       
+       id: doc.id,
+     }      
+     return tempObj
+   })).then((res) => res);
+   return projects
+  
 };
 
 export const addUser = async (user) => {
@@ -57,7 +73,6 @@ export const getProjects = async () => {
      const created = data['Created']
      const projectEndDt = data['Project End Date']
      const tempObj ={
-       id: doc.id,
        Name : data.Name? data.Name:'',
        Client :clientName.data()?.Name ?clientName.data().Name :'',
        'Project Admin':projectAdmin.data()?.Name ?projectAdmin.data().Name :'',
@@ -68,7 +83,8 @@ export const getProjects = async () => {
        'Modified By' : modifiedBy.data()?.Name? modifiedBy.data().Name:'',
        'Modified' :modified.toDate().toDateString(),
        'Created By' : createdBy.data()?.Name?createdBy.data().Name:'',
-       'Created' : created.toDate().toDateString()
+       'Created' : created.toDate().toDateString(),       
+       id: doc.id,
      }      
      return tempObj
    })).then((res) => res);
@@ -98,8 +114,7 @@ export const getClients = async () => {
     const createdBy = await getDoc(data['Created By'])
     const modified = data['Modified']  
     const created = data['Created']
-    const tempObj ={
-      id: doc.id,
+    const tempObj ={      
       Name : data.Name,
       'Account Manager':accountManager.data().Name,
       'RollOff Ack Pending Count': data['RollOff Ack Pending Count'],
@@ -108,7 +123,8 @@ export const getClients = async () => {
       'Modified By' : modifiedBy.data().Name,
       'Modified' :modified.toDate().toDateString(),
       'Created By' : createdBy.data().Name,
-      'Created' : created.toDate().toDateString()
+      'Created' : created.toDate().toDateString(),
+      id: doc.id
     }       
     return tempObj
   })).then((res) => res);
@@ -116,6 +132,15 @@ export const getClients = async () => {
 };
 
 export const addClient = async (client) => {
+  const systemRef =  collection(db,"TR_Users/0"); 
+  console.log('some ref**********',systemRef ) 
+  console.log(systemRef)
+  const accountManagerRef = doc(db, userRef, client['Account Manager']?.id)
+  console.log(accountManagerRef)
+  client['Account Manager'] = accountManagerRef
+  client['Modified By'] = systemRef
+  client['Created By'] = systemRef
+  console.log(client)
   await addDoc(collection(db, clientRef), client);
 };
 
@@ -128,12 +153,42 @@ export const deleteClient = async (clientID) => {
 };
 
 //TR_Employees
-export const getEmployees = async () => {
+export const getEmployeesRoster = async () => {
   const snapshot = await getDocs(employeeRef);
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+  const employees = await Promise.all(
+    snapshot.docs.map(async(doc) => {
+     const data = {...doc.data()}
+     const tempObj ={       
+       Name : data.Name,
+       'Last Name':data['Last Name'],
+       'Roll-On Date': data['Roll On Dt'].toDate().toDateString(),
+       'Roll-Off Date': data['Roll Off Dt'].toDate().toDateString(),
+       'Roll-On Ack Date': data['Roll On Ack Dt'].toDate().toDateString(),
+       'Roll-Off Ack Date': data['Roll Off Ack '].toDate().toDateString(),
+       'Initial Training Date': data['Initial Training Dt'].toDate().toDateString()
+     }       
+     return tempObj
+   })).then((res) => res);
+   return employees
+};
+export const getEmployeesACL = async () => {
+  const snapshot = await getDocs(employeeRef);
+  const employees = await Promise.all(
+    snapshot.docs.map(async(doc) => {
+     const data = {...doc.data()}
+     const tempObj ={       
+       Name : data.Name,
+       'Last Name':data['Last Name'],
+       'Roll-Off Date': data['Roll Off Dt'].toDate().toDateString(),
+       'Roll-Off Ack Date': data['Roll Off Ack '].toDate().toDateString(),
+       'Prod Access': data['Prod Access']? 'Yes':'No',
+       'Non-Prod Access': data['Non Prod Access']? 'Yes':'No',
+       'SoD': data['SoD']? 'Yes':'No',
+       'Access Revoke Date':data['Access Revoke Dt'].toDate().toDateString()
+     }       
+     return tempObj
+   })).then((res) => res);
+   return employees
 };
 
 export const addEmployee = async (employee) => {

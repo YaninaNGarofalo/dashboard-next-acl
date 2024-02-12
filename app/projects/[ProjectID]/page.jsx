@@ -4,13 +4,39 @@ import { MetricCard } from "@/app/components/metricsCard";
 import Tabla from "@/app/components/tabla";
 import Summary from "@/app/components/summarydetails";
 import Tabs from "@/app/components/tabs";
+import { headers } from "next/headers";
+const getProjects = async ()=>{
+  const res = await fetch('http://localhost:3000/api/project', {
+     method: "GET",
+     headers: headers(),
+     next: { tags: ["projects"] },
+   }).then(response => response.json())
+   return  res;
+}
+const getEmployeesACL = async ()=>{
+  const res = await fetch('http://localhost:3000/api/employeeACL', {
+     method: "GET",
+     headers: headers(),
+     next: { tags: ["projects"] },
+   }).then(response => response.json())
+   return  res;
+}
+const getEmployeesRoster = async ()=>{
+  const res = await fetch('http://localhost:3000/api/employeeRoster', {
+     method: "GET",
+     headers: headers(),
+     next: { tags: ["projects"] },
+   }).then(response => response.json())
+   return  res;
+}
 
-export default function project(){
+export default async function project({ params }){
 const testDate= new Date().toDateString();
 const segregationOfDutiesCases =[{"text" :"High Risk","SoDCount": 10,"risk":3}]
 const rollOnAckPendingCases =[{"text" :"Low Risk","rollOnAckPending": 2}]
 const rollOffAckPendingCases =[{"text" :" High Risk","rollOnAckPending": 15,"risk":3}]
 const revocationCases =[{"text" :"Medium Risk","Revocation Past Due": 40,"risk":2}]
+const roster = await getEmployeesRoster()
 const rollOnRollOffData = [
     {"Employee_ID":123, "Name":"John", "Last Name": "Doe", "Roll-On Date":testDate ,"Roll-Off Date": testDate ,
    "Roll-On Ack Date": testDate,"Roll-Off Ack Date": testDate ,"Initial Training Date":testDate  },
@@ -19,12 +45,15 @@ const rollOnRollOffData = [
    {"Employee_ID":123, "Name":"John", "Last Name": "Doe", "Roll-On Date": testDate ,"Roll-Off Date": testDate ,
    "Roll-On Ack Date": testDate ,"Roll-Off Ack Date": testDate ,"Initial Training Date":testDate  }
   ]
-  const aclData = [
+  const aclData = await getEmployeesACL()
+  const aclMockData = [
     {"Employee_ID":123, "Name":"John", "Last Name": "Doe", "Roll-Off Date": testDate ,"Roll-Off Ack Date": testDate , "Prod Access":"Yes", "Non-Prod Access":"No", "SoD":"No","Access Revoke Dt":"No" },
     {"Employee_ID":123, "Name":"John", "Last Name": "Doe", "Roll-Off Date": testDate ,"Roll-Off Ack Date": testDate , "Prod Access":"Yes", "Non-Prod Access":"No", "SoD":"No","Access Revoke Dt":"No" },
     {"Employee_ID":123, "Name":"John", "Last Name": "Doe", "Roll-Off Date": testDate ,"Roll-Off Ack Date": testDate , "Prod Access":"Yes", "Non-Prod Access":"No", "SoD":"No","Access Revoke Dt":"No" },
     {"Employee_ID":123, "Name":"John", "Last Name": "Doe", "Roll-Off Date":testDate  ,"Roll-Off Ack Date": testDate , "Prod Access":"Yes", "Non-Prod Access":"No", "SoD":"No","Access Revoke Dt":"No" } ]
-const projectData = {
+    
+    const projectData = (params.ProjectID)? (await getProjects()).find(x=>x.id == params.ProjectID) : undefined
+    const projectMockData = {
     "Project ID":123,
     "Project Name":"Nombre de Proyecto",
     "Client Name":"Nombre de Cliente",     
@@ -44,7 +73,7 @@ const projectData = {
           <Breadcrumbs></Breadcrumbs>
           <div className="grid grid-cols-4 gap-4 mb-4">
             <div className="col-span-4  flex-col items-center justify-center mb-4 rounded bg-gray-50 dark:bg-gray-800 p-4">
-              <Summary title={projectData["Project Name"]} summaryObj={projectData} />
+              <Summary title={projectData?.Name ? projectData.Name :projectMockData['Project Name']} summaryObj={projectData?projectData:projectMockData} />
             </div>
             <div className="col-span-4  flex-col items-center justify-center mb-4 rounded bg-gray-50 dark:bg-gray-800 p-4">
                 <h4 className="p-4 text-2xl font-bold dark:text-white">
@@ -58,8 +87,8 @@ const projectData = {
                 <MetricCard title="Pending Roll-Off Ack" data={rollOffAckPendingCases}></MetricCard>
               </div>
                 <Tabs tabs={[{name:'Roll-On / Roll-Off', show:true},{name:'Access Control Log', show:false}]} >
-                  <Tabla  data={rollOnRollOffData}  />
-                  <Tabla  data={aclData} />
+                  <Tabla  data={roster? roster: rollOnRollOffData}  />
+                  <Tabla  data={aclData? aclData: aclMockData} />
                 </Tabs>
             </div>
           </div>

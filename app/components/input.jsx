@@ -1,7 +1,7 @@
 "use client";
-const Input = ({ icon, type, placeholder, name, id, form, setForm, withLabel }) => {
+const Input = ({ icon, type, placeholder, name, id, form, setform, withLabel }) => {
   const handleChange = ({ target: { value, id } }) =>
-    setForm((prev) => ({
+    setform((prev) => ({
       ...prev,
       [id]: value,
     }));
@@ -9,7 +9,7 @@ const Input = ({ icon, type, placeholder, name, id, form, setForm, withLabel }) 
   return (
     <div className="relative flex-col items-center w-2/4 self-center">
       {icon}
-      {withLabel&&<label className="text-xs" for={id}>{placeholder}</label>}
+      {withLabel&&<label className="text-xs" htmlFor={id}>{placeholder}</label>}
       <input
         type={type}
         className={

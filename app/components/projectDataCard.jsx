@@ -19,7 +19,7 @@ export function DataCard({data}){
     </div>
     <div className="dark:text-white">
         {data.map((item, i)=>{       
-            return <div className="dark:text-white flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
+            return <div key={`${item}-${i}`} className="dark:text-white flex items-center justify-between pb-2 mb-2 space-x-12 text-sm border-b border-gray-200 md:space-x-24">
             <p>{item[properties[0]]}</p>
             <div className="dark:text-white flex items-end text-xs">
                 {item[properties[1]]}

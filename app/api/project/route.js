@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     const projects = await getProjects();
-    console.log(projects, '----------------------')
     return NextResponse.json(projects);
 }
 export async function POST(request) {
