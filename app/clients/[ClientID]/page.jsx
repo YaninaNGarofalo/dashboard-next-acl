@@ -2,13 +2,34 @@ import { Navbar } from "@/app/components/nav";
 import { Breadcrumbs } from "@/app/components/breadcrumbs";
 import Tabla from "@/app/components/tabla";
 import Summary from "@/app/components/summarydetails";
-export default function client({ params }) {
-const data = [
+import { headers } from "next/headers";
+const getProjects = async ()=>{
+  const res = await fetch('http://localhost:3000/api/project', {
+     method: "GET",
+     headers: headers(),
+     next: { tags: ["projects"] },
+   }).then(response => response.json())
+   return  res;
+}
+
+const getClients = async ()=>{
+  const res = await fetch('http://localhost:3000/api/client', {
+     method: "GET",
+     headers: headers(),
+     next: { tags: ["clients"] },
+   }).then(response => response.json())
+   return  res;
+}
+
+export default async function client({ params }) {
+// const data = (params.ClientID)? (await getProjects()).find(x=>x['Client_ID'] == params.ClientID) : undefined
+const mockdata = [
     {"Project #":123, "Project Name" :"C", "Project POC":"JonDoe@mail.com","Project Status":"Completed","# Active Employees":0 , "# Roll-Off Ack Pending":5 , "# Segregation of Duties":5 , "# Revoke Past Due":5,"actionID":123  },
     {"Project #":456, "Project Name" :"B", "Project POC":"JonDoe@mail.com","Project Status":"Completed", "# Active Employees":0 , "# Roll-Off Ack Pending":5 , "# Segregation of Duties":5 , "# Revoke Past Due":5, "actionID":456  },
     {"Project #":789, "Project Name" :"A", "Project POC":"JonDoe@mail.com","Project Status":"Completed","# Active Employees":0 , "# Roll-Off Ack Pending":5 , "# Segregation of Duties":5 , "# Revoke Past Due":5,"actionID":789   }
   ]
-const clientData = {
+const clientData =(params.ClientID)? (await getClients()).find(x=>x.id == params.ClientID) : undefined
+const clientMockData = {
   "Client Name":" Nombre de Cliente", 
   "Client ID":123,
   "Account Manager": "John Doe",
@@ -26,14 +47,14 @@ return (
           <Breadcrumbs></Breadcrumbs>
           <div className="flex-col mb-4">
             <div className="flex-col items-center justify-center mb-4 rounded bg-gray-50 dark:bg-gray-800 p-4">
-              <Summary title={clientData["Client Name"]} summaryObj={clientData} />
+              <Summary title={clientData?.Name ? clientData.Name : clientMockData["Client Name"]} summaryObj={clientData ? clientData: clientMockData} />
             </div>
             <div className="col-span-3  flex-col items-center justify-center mb-4 rounded bg-gray-50 dark:bg-gray-800 p-4">
                 <h4 className="p-4 text-2xl font-bold dark:text-white">
                     <span>Client Projects</span>
                     <i className="bi bi-arrows-fullscreen"></i>
                 </h4>
-                <Tabla  data={data} actionName='Project Info' actionPath='../projects/'  />
+                <Tabla  data={mockdata} actionName='Project Info' actionPath='../projects/'  />
             </div>
           </div>
         </div>
