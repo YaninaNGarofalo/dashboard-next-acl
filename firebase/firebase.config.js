@@ -202,3 +202,22 @@ export const updateEmployee = async (employee, id) => {
 export const deleteEmployee= async (employeeID) => {
   await deleteDoc(doc(db, employeeRef, employeeID));
 };
+
+export const getClientMetrics = async () => {
+  const snapshot = await getDocs(clientRef);
+  const clients = await Promise.all(
+   snapshot.docs.map(async(doc) => {
+    const data = {...doc.data()}
+    const accountManager = await getDoc(data['Account Manager'])
+    const tempObj ={      
+      Name : data.Name,
+      'Account Manager':accountManager.data().Name,
+      'RollOff Ack Pending Count': data['RollOff Ack Pending Count'],
+      'Revoke Past Due Count' : data['Revoke Past Due Count'],
+      'SoD Count':data['SoD Count']
+    }       
+    return tempObj
+  })).then((res) => res);
+  console.log(clients)
+  return clients
+};

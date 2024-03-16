@@ -1,14 +1,28 @@
 import Tabla from "../components/tabla"
 import { Navbar } from "../components/nav";
 import { DataCard } from "../components/projectDataCard";
+import { headers } from "next/headers";
 import { Breadcrumbs } from "../components/breadcrumbs";
-export default function dashboard(){
-  const data= [
-    {"Client": "Name of the Client C", "Account Manager":"JonDoe@mail.com","# Active Employees":0 , "# Roll-Off Ack Pending":5 , "# Segregation of Duties":5 , "# Revoke Past Due":5, "actionID":5  },
-    {"Client": "Name of the Client B", "Account Manager":"JonDoe@mail.com","# Active Employees":0 , "# Roll-Off Ack Pending":5 , "# Segregation of Duties":5 , "# Revoke Past Due":5 ,"actionID":5 },
-    {"Client": "Name of the Client A", "Account Manager":"JonDoe@mail.com","# Active Employees":0 , "# Roll-Off Ack Pending":5, "# Segregation of Duties":5 , "# Revoke Past Due":5 ,"actionID":5  }
-  ]
-  const segregationOfDutiesCases =[{"ClientName" :"Name of the Client A","SoDCount": 10}, {"ClientName" :"Name of the Client B","SoDCount": 25},{"ClientName" :"Name of the Client A","SoDCount": 10}]
+const getClients = async ()=>{
+   const res = await fetch('http://localhost:3000/api/client', {
+      method: "GET",
+      headers: headers(),
+      next: { tags: ["clients"] },
+    }).then(response => response.json())
+    return  res;
+}
+const getClientsMetrics = async ()=>{
+   const res = await fetch('http://localhost:3000/api/metrics', {
+      method: "GET",
+      headers: headers()
+    }).then(response => response.json())
+    return  res;
+}
+export default async function dashboard(){
+   const clients = await getClients();
+  const data= clients
+  const clientsMetrics = await getClientsMetrics()
+  const segregationOfDutiesCases = clientsMetrics
     return <div className="flex">
       <Navbar></Navbar>
       <div className="p-4 w-full h-screen">
