@@ -11,6 +11,5 @@ export async function GET(request) {
             return tempObj
         }        
     )
-    console.log(metricsSOD)
     return NextResponse.json(metricsSOD);
 }

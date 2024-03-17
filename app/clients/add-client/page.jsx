@@ -2,7 +2,6 @@ import { Navbar } from "@/app/components/nav"
 import { Breadcrumbs } from "@/app/components/breadcrumbs"
 import Input from "@/app/components/input"
 import Form from "@/app/components/form"
-import { getClients, getUsers } from "@/firebase/firebase.config"
 
 const addNewClient = async (data) => {
    "use server";

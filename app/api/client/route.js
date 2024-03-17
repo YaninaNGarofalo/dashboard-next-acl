@@ -1,4 +1,4 @@
-import { getClients, addClient, updateClient, deleteClient } from "@/firebase/firebase.config";
+import { getClients, addClient, updateClient, deleteClient,getUsers } from "@/firebase/firebase.config";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -8,10 +8,9 @@ export async function GET() {
 export async function POST(request) {
     const body = await request.json();  
     console.log(body, 'POST body')
-
     addClient(body)
     // revalidateTag("clients");  
-    return NextResponse.json("Added");
+    return NextResponse.json(body);
 }
 export async function PUT(request) {
     const body = await request.json();  

@@ -23,11 +23,7 @@ const getClients = async ()=>{
 
 export default async function client({ params }) {
 // const data = (params.ClientID)? (await getProjects()).find(x=>x['Client_ID'] == params.ClientID) : undefined
-const mockdata = [
-    {"Project #":123, "Project Name" :"C", "Project POC":"JonDoe@mail.com","Project Status":"Completed","# Active Employees":0 , "# Roll-Off Ack Pending":5 , "# Segregation of Duties":5 , "# Revoke Past Due":5,"actionID":123  },
-    {"Project #":456, "Project Name" :"B", "Project POC":"JonDoe@mail.com","Project Status":"Completed", "# Active Employees":0 , "# Roll-Off Ack Pending":5 , "# Segregation of Duties":5 , "# Revoke Past Due":5, "actionID":456  },
-    {"Project #":789, "Project Name" :"A", "Project POC":"JonDoe@mail.com","Project Status":"Completed","# Active Employees":0 , "# Roll-Off Ack Pending":5 , "# Segregation of Duties":5 , "# Revoke Past Due":5,"actionID":789   }
-  ]
+const mockdata = await getProjects()
 const clientData =(params.ClientID)? (await getClients()).find(x=>x.id == params.ClientID) : undefined
 const clientMockData = {
   "Client Name":" Nombre de Cliente", 
